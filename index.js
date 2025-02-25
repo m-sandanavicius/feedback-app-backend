@@ -6,6 +6,10 @@ const app = express();
 
 // passport.use(new GooglePassport());
 
+app.get('/', (req, res) => {
+  res.send({ user: 'Mindaugas' });
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
