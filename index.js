@@ -1,14 +1,21 @@
 const express = require('express');
-const passport = require('passport');
-const GooglePassport = require('passport-google-oauth20').Strategy;
+const mongoose = require('mongoose');
+const keys = require('./config/keys');
+require('./services/passport');
+
+mongoose
+  .connect(keys.mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((err) => console.log('Error on start: ' + err.stack));
 
 const app = express();
 
-// passport.use(new GooglePassport());
-
-app.get('/', (req, res) => {
-  res.send({ user: 'Mindaugas' });
-});
+require('./routes/authRoutes')(app);
 
 const PORT = process.env.PORT || 3000;
 
